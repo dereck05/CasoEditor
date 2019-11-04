@@ -13,22 +13,26 @@ public class Factory implements IFactory {
 
     @Override
     public PDFImp createPDF() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PDFImp pdfImp = new PDFImp();
+        return pdfImp;
     }
 
     @Override
     public CSVImp createCSV() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CSVImp csvImp = new CSVImp();
+        return csvImp;
     }
 
     @Override
     public XMLImp createXML() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        XMLImp xmlImp = new XMLImp();
+        return xmlImp;
     }
 
     @Override
     public JsonImp createJson() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JsonImp jsonImp = new JsonImp();
+        return jsonImp;
     }
     
 }
