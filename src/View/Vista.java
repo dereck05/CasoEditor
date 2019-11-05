@@ -46,7 +46,7 @@ public class Vista extends javax.swing.JFrame {
         jBtnUndo = new javax.swing.JButton();
         jBtnRedo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textArea = new javax.swing.JTextArea();
         jBtnCopy = new javax.swing.JButton();
         jBtnCut = new javax.swing.JButton();
         jBtnPaste = new javax.swing.JButton();
@@ -100,9 +100,9 @@ public class Vista extends javax.swing.JFrame {
         jBtnRedo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jBtnRedo.setText("Redo");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        jScrollPane1.setViewportView(textArea);
 
         jBtnCopy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jBtnCopy.setText("Copy");
@@ -240,6 +240,6 @@ public class Vista extends javax.swing.JFrame {
     public javax.swing.JButton jBtnSaveAs;
     public javax.swing.JButton jBtnUndo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    public javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 }

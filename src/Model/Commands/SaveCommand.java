@@ -7,6 +7,7 @@ package Model.Commands;
 
 import Model.Commands.ICommand;
 import Model.Memento.Caretaker;
+import Model.Memento.Memento;
 import Model.Memento.Originator;
 
 /**
@@ -26,7 +27,10 @@ public class SaveCommand implements ICommand{
     public void execute(){
         originator.setState(state);
         caretaker.addMemento(originator.saveStateToMemento());
-        System.out.println("Guardado! Estado:"+originator.getStateFromMemento(caretaker.getMemento(0)));
+        for(Memento i : caretaker.getList()){
+            System.out.println("Estado:"+i.getState());
+
+        }
     }
     
     

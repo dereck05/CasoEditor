@@ -23,4 +23,7 @@ public class Caretaker {
     public Memento getMemento(int index){
         return mementoList.get(index);
     }
+    public ArrayList<Memento> getList(){
+        return this.mementoList;
+    }
 }

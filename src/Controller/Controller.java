@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Controller;
 
 import Model.Commands.ICommand;
 import Model.Commands.Invoker;
@@ -43,6 +43,7 @@ public class Controller implements ActionListener {
         this.vista.jBtnSave.addActionListener(this);
         this.vista.jBtnSaveAs.addActionListener(this);
         this.vista.jBtnUndo.addActionListener(this);
+        this.vista.setVisible(true);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -94,7 +95,7 @@ public class Controller implements ActionListener {
         
     }
     public void save(){
-        comando = new SaveCommand("hola",this.originator,this.careTaker);
+        comando = new SaveCommand(this.vista.textArea.getText(),this.originator,this.careTaker);
         inv.execute(comando);
         
     }
