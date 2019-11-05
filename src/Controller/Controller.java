@@ -8,6 +8,7 @@ package Controller;
 import Model.Commands.ICommand;
 import Model.Commands.Invoker;
 import Model.Commands.SaveCommand;
+import Model.Commands.UndoCommand;
 import Model.Memento.Caretaker;
 import Model.Memento.Originator;
 import View.Vista;
@@ -44,6 +45,28 @@ public class Controller implements ActionListener {
         this.vista.jBtnSaveAs.addActionListener(this);
         this.vista.jBtnUndo.addActionListener(this);
         this.vista.setVisible(true);
+        Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+          // Esto se ejecuta en segundo plano una única vez
+          while (true) {
+            // Pero usamos un truco y hacemos un ciclo infinito
+            try {
+              // En él, hacemos que el hilo duerma
+              Thread.sleep(20000);
+              // Y después realizamos las operaciones
+              comando = new SaveCommand(vista.textArea.getText(),originator,careTaker);
+              inv.execute(comando);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+          }
+        }
+        };
+        Thread hilo = new Thread(runnable);
+        hilo.start();
+        
+        
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -106,7 +129,8 @@ public class Controller implements ActionListener {
         
     }
     public void undo(){
-        
+        comando = new UndoCommand(this.vista,this.originator,this.careTaker);
+        inv.execute(comando);
     }
     public void redo(){
         
