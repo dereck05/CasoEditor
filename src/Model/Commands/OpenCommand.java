@@ -5,12 +5,16 @@
  */
 package Model.Commands;
 
-import Model.Commands.BaseCommand;
+import Model.Commands.ICommand;
 
 /**
  *
  * @author naty9
  */
-public class OpenCommand extends BaseCommand{
+public class OpenCommand implements ICommand{
+    @Override
+    public void execute(){
+        
+    }
     
 }

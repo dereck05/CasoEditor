@@ -5,12 +5,16 @@
  */
 package Model.Commands;
 
-import Model.Commands.BaseCommand;
+import Model.Commands.ICommand;
 
 /**
  *
  * @author naty9
  */
-public class FontColorCommand extends BaseCommand{
+public class FontColorCommand implements ICommand{
+    @Override
+    public void execute(){
+        
+    }
     
 }

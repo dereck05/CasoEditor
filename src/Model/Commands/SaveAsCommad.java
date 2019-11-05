@@ -5,12 +5,16 @@
  */
 package Model.Commands;
 
-import Model.Commands.BaseCommand;
+import Model.Commands.ICommand;
 
 /**
  *
  * @author naty9
  */
-public class SaveAsCommad extends BaseCommand{
+public class SaveAsCommad implements ICommand{
+    @Override
+    public void execute(){
+        
+    }
     
 }

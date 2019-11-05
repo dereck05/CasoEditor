@@ -12,15 +12,20 @@ package Model.Memento;
 public class Originator {
     private String state;
     
-    public Memento createMemento(){
-        return new Memento(state);
-    }
-    
-    public void setMemento(String pState){
-        this.state = pState;
-    }
-    
-    public void restoreToState(Memento memento) {
-        state = memento.getState();
-  }
+    public void setState(String state){
+      this.state = state;
+   }
+
+   public String getState(){
+      return state;
+   }
+
+   public Memento saveStateToMemento(){
+      return new Memento(state);
+   }
+
+   public String getStateFromMemento(Memento memento){
+      state = memento.getState();
+      return state;
+   }
 }

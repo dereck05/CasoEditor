@@ -5,12 +5,21 @@
  */
 package Model.Commands;
 
-import Model.Commands.BaseCommand;
+import Model.Commands.ICommand;
 
 /**
  *
  * @author naty9
  */
-public class CopyCommand extends BaseCommand {
+public class CopyCommand implements ICommand {
+    
+    
+    
+    
+    @Override
+    public void execute(){
+        
+    }
+    
     
 }

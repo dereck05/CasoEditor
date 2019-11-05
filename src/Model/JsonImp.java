@@ -10,6 +10,7 @@ package Model;
  * @author naty9
  */
 public class JsonImp implements IArchivo{
+    public JsonImp(){}
 
     @Override
     public void guardar() {

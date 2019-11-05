@@ -10,6 +10,7 @@ package Model;
  * @author naty9
  */
 public class XMLImp implements IArchivo{
+    public XMLImp(){}
 
     @Override
     public void guardar() {

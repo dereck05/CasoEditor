@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Model.Factory;
-import View.MainFrame;
+import Model.FileFactory;
+import View.Vista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,10 +15,10 @@ import java.awt.event.ActionListener;
  * @author naty9
  */
 public class MainPageController implements ActionListener {
-    public MainFrame vista;
-    public Factory factory;
+    public Vista vista;
+    public FileFactory factory;
     
-    public MainPageController(MainFrame pVista, Factory pFactory){
+    public MainPageController(Vista pVista, FileFactory pFactory){
         this.vista = pVista;
         this.factory = pFactory;
     }

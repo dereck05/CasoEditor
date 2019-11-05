@@ -10,6 +10,7 @@ package Model;
  * @author naty9
  */
 public class PDFImp implements IArchivo {
+    public PDFImp(){}
 
     @Override
     public void guardar() {

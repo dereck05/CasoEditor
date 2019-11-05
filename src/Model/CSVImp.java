@@ -10,7 +10,7 @@ package Model;
  * @author naty9
  */
 public class CSVImp implements IArchivo{
-
+    public CSVImp(){}
     @Override
     public void guardar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
