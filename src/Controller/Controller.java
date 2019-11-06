@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.AbstractFactory;
 import Model.Commands.CopyCommand;
 import Model.Commands.CutCommand;
 import Model.CSVImp;
@@ -14,10 +15,12 @@ import Model.Commands.PasteCommand;
 import Model.Commands.RedoCommand;
 import Model.Commands.SaveCommand;
 import Model.Commands.UndoCommand;
+import Model.FileFactory;
 import Model.JsonImp;
 import Model.Memento.Caretaker;
 import Model.Memento.Originator;
 import Model.PDFImp;
+import Model.TxtTabImp;
 import Model.XMLImp;
 import View.Vista;
 import java.awt.Color;
@@ -167,9 +170,12 @@ public class Controller implements ActionListener {
         area.getSelectedText();
         area.setSelectionColor(color);
         area.requestFocusInWindow();
-        XMLImp pdf = new XMLImp();
-        pdf.guardar(this.vista.textArea.getText(), "Pruebaxml.xml");
-        pdf.leer("Pruebaxml.xml");
+        FileFactory f = new FileFactory();
+        
+        //TxtTabImp t = (TxtTabImp)f.crear(f.);
+        //t.guardar(this.vista.textArea.getText(), "PruebaTxtTab");
+        //pdf.guardar(this.vista.textArea.getText(), "Pruebaxml.xml");
+        //pdf.leer("Pruebaxml.xml");
         
     }
     public void undo(){

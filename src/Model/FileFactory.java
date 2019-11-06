@@ -26,6 +26,10 @@ public class FileFactory extends AbstractFactory {
                 break;
             case JSON:
                 objeto = new JsonImp();
+            case TXT:
+                objeto = new TxtImp();
+            case TXTab:
+                objeto = new TxtTabImp();
             default:
                 objeto = null;
                    

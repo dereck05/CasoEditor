@@ -14,6 +14,8 @@ public abstract class AbstractFactory {
     public static final int CSV = 2 ;
     public static final int XML = 3 ;
     public static final int JSON = 4 ;
+    public static final int TXT = 5;
+    public static final int TXTab = 6;
     
     public abstract IArchivo crear(int n);
 
