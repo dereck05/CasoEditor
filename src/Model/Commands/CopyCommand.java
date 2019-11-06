@@ -5,20 +5,27 @@
  */
 package Model.Commands;
 
+import Controller.Controller;
 import Model.Commands.ICommand;
+import Model.Memento.Caretaker;
+import Model.Memento.Originator;
+import View.Vista;
 
-/**
- *
- * @author naty9
- */
+
 public class CopyCommand implements ICommand {
-    
+    private String copycontent;
+    private Controller c;
+    public CopyCommand(String copy ,Controller cont){
+        this.c = cont;
+        this.copycontent = copy;
+        
+    }
     
     
     
     @Override
     public void execute(){
-        
+        this.c.setCopy(copycontent);
     }
     
     

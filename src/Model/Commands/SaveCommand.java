@@ -25,8 +25,21 @@ public class SaveCommand implements ICommand{
     }
     @Override
     public void execute(){
-        originator.setState(state);
-        caretaker.addMemento(originator.saveStateToMemento());
+        if(!caretaker.getList().isEmpty()){
+            String last = caretaker.getList().get(caretaker.getList().size()-1).getState();
+            if(!last.equals(state)){
+                originator.setState(state);
+                caretaker.addMemento(originator.saveStateToMemento()); 
+            }
+            else{
+                System.out.println("Mismo estado, no se guardo\n");
+            }
+        }
+        else{
+            originator.setState(state);
+            caretaker.addMemento(originator.saveStateToMemento());
+        }
+        
         for(Memento i : caretaker.getList()){
             System.out.println("Estado:"+i.getState());
 

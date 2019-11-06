@@ -5,8 +5,11 @@
  */
 package Controller;
 
+import Model.Commands.CopyCommand;
+import Model.Commands.CutCommand;
 import Model.Commands.ICommand;
 import Model.Commands.Invoker;
+import Model.Commands.PasteCommand;
 import Model.Commands.SaveCommand;
 import Model.Commands.UndoCommand;
 import Model.Memento.Caretaker;
@@ -28,10 +31,12 @@ public class Controller implements ActionListener {
     ICommand comando;
     Originator originator;
     Caretaker careTaker;
+    public static String copycontent;
     
     public Controller(Vista v){
         this.vista = v;
         this.inv = new Invoker();
+        this.copycontent = "";
         this.careTaker = new Caretaker();
         this.originator = new Originator();
         this.vista.jBtnCopy.addActionListener(this);
@@ -53,7 +58,7 @@ public class Controller implements ActionListener {
             // Pero usamos un truco y hacemos un ciclo infinito
             try {
               // En él, hacemos que el hilo duerma
-              Thread.sleep(20000);
+              Thread.sleep(10000);
               // Y después realizamos las operaciones
               comando = new SaveCommand(vista.textArea.getText(),originator,careTaker);
               inv.execute(comando);
@@ -65,8 +70,16 @@ public class Controller implements ActionListener {
         };
         Thread hilo = new Thread(runnable);
         hilo.start();
+     
+    
         
-        
+    }
+    
+    public void setCopy(String s){
+        this.copycontent = s;
+    }
+    public String getCopy(){
+        return this.copycontent;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -136,12 +149,16 @@ public class Controller implements ActionListener {
         
     }
     public void copy(){
+        //comando = new CopyCommand(this);
+        //inv.execute(comando);
         
     }
     public void cut(){
-        
+        //comando = new CutCommand(this.vista,this.copycontent);
+        //inv.execute(comando);
     }
     public void paste(){
-        
+        //comando = new PasteCommand(this.vista,this.copycontent);
+        //inv.execute(comando);
     }
 }

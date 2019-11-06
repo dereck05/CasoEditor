@@ -25,7 +25,8 @@ public class UndoCommand implements ICommand {
     }
     @Override
     public void execute(){
-        String estadoAnterior = caretaker.getList().get(caretaker.getList().size()-1).getState();
+        String estadoAnterior = caretaker.getList().get(caretaker.getList().size()-2).getState();
+        System.out.println("Estado anterior:"+estadoAnterior);
         v.textArea.setText(estadoAnterior);
     }
     
