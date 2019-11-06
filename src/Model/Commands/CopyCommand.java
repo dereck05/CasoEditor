@@ -10,14 +10,17 @@ import Model.Commands.ICommand;
 import Model.Memento.Caretaker;
 import Model.Memento.Originator;
 import View.Vista;
+import javax.swing.JTextArea;
 
 
 public class CopyCommand implements ICommand {
     private String copycontent;
     private Controller c;
-    public CopyCommand(String copy ,Controller cont){
+    private Vista v;
+    public CopyCommand(Controller cont,Vista vista){
         this.c = cont;
-        this.copycontent = copy;
+        this.v = vista;
+        this.copycontent="";
         
     }
     
@@ -25,7 +28,9 @@ public class CopyCommand implements ICommand {
     
     @Override
     public void execute(){
-        this.c.setCopy(copycontent);
+        JTextArea jtext = this.v.textArea;
+        copycontent = jtext.getSelectedText();
+        c.setCopy(copycontent);
     }
     
     
