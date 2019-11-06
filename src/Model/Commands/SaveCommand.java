@@ -5,6 +5,7 @@
  */
 package Model.Commands;
 
+import Controller.Controller;
 import Model.Commands.ICommand;
 import Model.Memento.Caretaker;
 import Model.Memento.Memento;
@@ -18,10 +19,12 @@ public class SaveCommand implements ICommand{
     private String state;
     private Originator originator;
     private Caretaker caretaker;
+    
     public SaveCommand(String str,Originator o,Caretaker c){
         this.state = str;
         this.caretaker = c;
         this.originator = o;
+     
     }
     @Override
     public void execute(){
@@ -38,6 +41,7 @@ public class SaveCommand implements ICommand{
         else{
             originator.setState(state);
             caretaker.addMemento(originator.saveStateToMemento());
+            
         }
         
         for(Memento i : caretaker.getList()){

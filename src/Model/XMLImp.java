@@ -7,9 +7,13 @@ package Model;
 
 
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,38 +41,16 @@ public class XMLImp implements IArchivo{
 
     @Override
     public void guardar(String text, String filename) {
-        Document dom;
-        Element e = null;
         
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            dom = db.newDocument();
-            Element rootEle = dom.createElement("roles");
-            e = dom.createElement("text");
-            e.appendChild(dom.createTextNode(text));
-            rootEle.appendChild(e);
-
-            dom.appendChild(rootEle);
-
-            try {
-                Transformer tr = TransformerFactory.newInstance().newTransformer();
-                tr.setOutputProperty(OutputKeys.INDENT, "yes");
-                tr.setOutputProperty(OutputKeys.METHOD, "xml");
-                tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
-                tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-                tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(filename)));
-                
-        }   catch (TransformerException ex) { 
-                Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        } catch (ParserConfigurationException ex) {
+            BufferedWriter writer;
+            writer = new BufferedWriter(new FileWriter(filename));
+            writer.write("<text>\n"+text+"\n<\\text>");
+            writer.close();
+        } catch (IOException ex) {
             Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     @Override

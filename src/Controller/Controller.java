@@ -5,18 +5,22 @@
  */
 package Controller;
 
+import Model.AbstractFactory;
 import Model.Commands.CopyCommand;
 import Model.Commands.CutCommand;
 import Model.CSVImp;
 import Model.Commands.ICommand;
 import Model.Commands.Invoker;
 import Model.Commands.PasteCommand;
+import Model.Commands.RedoCommand;
 import Model.Commands.SaveCommand;
 import Model.Commands.UndoCommand;
+import Model.FileFactory;
 import Model.JsonImp;
 import Model.Memento.Caretaker;
 import Model.Memento.Originator;
 import Model.PDFImp;
+import Model.TxtTabImp;
 import Model.XMLImp;
 import View.Vista;
 import java.awt.Color;
@@ -45,7 +49,8 @@ public class Controller implements ActionListener {
     ICommand comando;
     Originator originator;
     Caretaker careTaker;
-    public static String copycontent;
+    private String copycontent;
+    private int estado;
 
     public Controller(Vista v){
         this.vista = v;
@@ -63,6 +68,7 @@ public class Controller implements ActionListener {
         this.vista.jBtnSave.addActionListener(this);
         this.vista.jBtnSaveAs.addActionListener(this);
         this.vista.jBtnUndo.addActionListener(this);
+        this.estado = -1;
         this.vista.setVisible(true);
         Runnable runnable = new Runnable() {
         @Override
@@ -72,7 +78,7 @@ public class Controller implements ActionListener {
             // Pero usamos un truco y hacemos un ciclo infinito
             try {
               // En él, hacemos que el hilo duerma
-              Thread.sleep(10000);
+              Thread.sleep(500000);
               // Y después realizamos las operaciones
               comando = new SaveCommand(vista.textArea.getText(),originator,careTaker);
               inv.execute(comando);
@@ -94,6 +100,12 @@ public class Controller implements ActionListener {
     }
     public String getCopy(){
         return this.copycontent;
+    }
+    public void setEstado(int s){
+        this.estado = s;
+    }
+    public int getEstado(){
+        return this.estado;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -158,37 +170,33 @@ public class Controller implements ActionListener {
         area.getSelectedText();
         area.setSelectionColor(color);
         area.requestFocusInWindow();
-        XMLImp pdf = new XMLImp();
-        pdf.guardar(this.vista.textArea.getText(), "Pruebaxml.xml");
-        pdf.leer("Pruebaxml.xml");
-        /*try{
-            Files.write(Paths.get("file.xml"), this.vista.textArea.getText().getBytes());
-        } catch(Exception e){
-            System.out.println("Error:");
-        } */
+        FileFactory f = new FileFactory();
+        
+        //TxtTabImp t = (TxtTabImp)f.crear(f.);
+        //t.guardar(this.vista.textArea.getText(), "PruebaTxtTab");
+        //pdf.guardar(this.vista.textArea.getText(), "Pruebaxml.xml");
+        //pdf.leer("Pruebaxml.xml");
+        
     }
     public void undo(){
-        comando = new UndoCommand(this.vista,this.originator,this.careTaker);
+        comando = new UndoCommand(this,this.vista,this.originator,this.careTaker);
         inv.execute(comando);
     }
     public void redo(){
-        try(BufferedWriter fileOut = new BufferedWriter(new FileWriter("file.txt"))){
-            vista.textArea.write(fileOut);
-        } catch(Exception e){
-            System.out.println("Error");
-        }
+        comando = new RedoCommand(this,this.vista,this.originator,this.careTaker);
+        inv.execute(comando);
     }
     public void copy(){
-        //comando = new CopyCommand(this);
-        //inv.execute(comando);
+        comando = new CopyCommand(this,this.vista);
+        inv.execute(comando);
 
     }
     public void cut(){
-        //comando = new CutCommand(this.vista,this.copycontent);
-        //inv.execute(comando);
+        comando = new CutCommand(this,this.vista);
+        inv.execute(comando);
     }
     public void paste(){
-        //comando = new PasteCommand(this.vista,this.copycontent);
-        //inv.execute(comando);
+        comando = new PasteCommand(this,this.vista);
+        inv.execute(comando);
     }
 }
