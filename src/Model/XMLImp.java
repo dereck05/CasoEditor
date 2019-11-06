@@ -5,6 +5,28 @@
  */
 package Model;
 
+
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 /**
  *
  * @author naty9
@@ -12,14 +34,78 @@ package Model;
 public class XMLImp implements IArchivo{
     public XMLImp(){}
 
+
     @Override
-    public void guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void guardar(String text, String filename) {
+        Document dom;
+        Element e = null;
+        
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            dom = db.newDocument();
+            Element rootEle = dom.createElement("roles");
+            e = dom.createElement("text");
+            e.appendChild(dom.createTextNode(text));
+            rootEle.appendChild(e);
+
+            dom.appendChild(rootEle);
+
+            try {
+                Transformer tr = TransformerFactory.newInstance().newTransformer();
+                tr.setOutputProperty(OutputKeys.INDENT, "yes");
+                tr.setOutputProperty(OutputKeys.METHOD, "xml");
+                tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+                tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+                tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(filename)));
+                
+        }   catch (TransformerException ex) { 
+                Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public String leer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String leer(String filename) {
+        ArrayList<String> rolev = new ArrayList<String>();
+        String text = null;
+        Document dom;
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            dom = db.parse(filename);
+            Element doc = dom.getDocumentElement();
+            text = getTextValue(text, doc, "text");
+            if (text != null) {
+                if (!text.isEmpty())
+                    rolev.add(text);
+            }
+
+        }catch (ParserConfigurationException ex) {
+            Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Texto xml:" + text);
+        return text;
     }
     
+    private String getTextValue(String def, Element doc, String tag) {
+        String value = def;
+        NodeList nl;
+        nl = doc.getElementsByTagName(tag);
+        if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
+            value = nl.item(0).getFirstChild().getNodeValue();
+        }
+        return value;
+    }
 }
+

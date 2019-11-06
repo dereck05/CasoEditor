@@ -10,6 +10,6 @@ package Model;
  * @author naty9
  */
 public interface IArchivo {
-    public void guardar();
-    public String leer();
+    public void guardar(String text, String filename);
+    public String leer(String filename);
 }

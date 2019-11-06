@@ -5,18 +5,32 @@
  */
 package Controller;
 
+import Model.CSVImp;
 import Model.Commands.ICommand;
 import Model.Commands.Invoker;
 import Model.Commands.SaveCommand;
 import Model.Commands.UndoCommand;
+import Model.JsonImp;
 import Model.Memento.Caretaker;
 import Model.Memento.Originator;
+import Model.PDFImp;
+import Model.XMLImp;
 import View.Vista;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.text.AttributeSet;
 
 /**
  *
@@ -111,7 +125,7 @@ public class Controller implements ActionListener {
     }
     
     public void newDoc(){
-        
+  
     }
     
     public void open(){
@@ -126,14 +140,30 @@ public class Controller implements ActionListener {
         
     }
     public void font(){
-        
+        JTextArea area = vista.textArea;
+        Color color = JColorChooser.showDialog(vista, "Colors", Color.yellow);
+        area.getSelectedText();
+        area.setSelectionColor(color);
+        area.requestFocusInWindow();
+        XMLImp pdf = new XMLImp();
+        pdf.guardar(this.vista.textArea.getText(), "Pruebaxml.xml");
+        pdf.leer("Pruebaxml.xml");
+        /*try{
+            Files.write(Paths.get("file.xml"), this.vista.textArea.getText().getBytes());
+        } catch(Exception e){
+            System.out.println("Error:");
+        } */
     }
     public void undo(){
         comando = new UndoCommand(this.vista,this.originator,this.careTaker);
         inv.execute(comando);
     }
     public void redo(){
-        
+        try(BufferedWriter fileOut = new BufferedWriter(new FileWriter("file.txt"))){
+            vista.textArea.write(fileOut);
+        } catch(Exception e){
+            System.out.println("Error");
+        }
     }
     public void copy(){
         

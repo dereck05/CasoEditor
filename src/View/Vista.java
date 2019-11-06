@@ -101,6 +101,7 @@ public class Vista extends javax.swing.JFrame {
         jBtnRedo.setText("Redo");
 
         textArea.setColumns(20);
+        textArea.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         textArea.setRows(5);
         jScrollPane1.setViewportView(textArea);
 
