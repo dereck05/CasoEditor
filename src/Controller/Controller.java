@@ -7,19 +7,33 @@ package Controller;
 
 import Model.Commands.CopyCommand;
 import Model.Commands.CutCommand;
+import Model.CSVImp;
 import Model.Commands.ICommand;
 import Model.Commands.Invoker;
 import Model.Commands.PasteCommand;
 import Model.Commands.SaveCommand;
 import Model.Commands.UndoCommand;
+import Model.JsonImp;
 import Model.Memento.Caretaker;
 import Model.Memento.Originator;
+import Model.PDFImp;
+import Model.XMLImp;
 import View.Vista;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.text.AttributeSet;
 
 /**
  *
@@ -32,7 +46,7 @@ public class Controller implements ActionListener {
     Originator originator;
     Caretaker careTaker;
     public static String copycontent;
-    
+
     public Controller(Vista v){
         this.vista = v;
         this.inv = new Invoker();
@@ -70,11 +84,11 @@ public class Controller implements ActionListener {
         };
         Thread hilo = new Thread(runnable);
         hilo.start();
-     
-    
-        
+
+
+
     }
-    
+
     public void setCopy(String s){
         this.copycontent = s;
     }
@@ -99,18 +113,18 @@ public class Controller implements ActionListener {
             case "Font color":
                 font();
                 break;
-                
+
             case "Undo":
                 undo();
                 break;
-                
+
             case "Redo":
                 redo();
                 break;
             case "Copy":
                 copy();
                 break;
-                
+
             case "Cut":
                 cut();
                 break;
@@ -122,36 +136,52 @@ public class Controller implements ActionListener {
                 break;
         }
     }
-    
+
     public void newDoc(){
-        
+
     }
-    
+
     public void open(){
-        
+
     }
     public void save(){
         comando = new SaveCommand(this.vista.textArea.getText(),this.originator,this.careTaker);
         inv.execute(comando);
-        
+
     }
     public void saveAs(){
-        
+
     }
     public void font(){
-        
+        JTextArea area = vista.textArea;
+        Color color = JColorChooser.showDialog(vista, "Colors", Color.yellow);
+        area.getSelectedText();
+        area.setSelectionColor(color);
+        area.requestFocusInWindow();
+        XMLImp pdf = new XMLImp();
+        pdf.guardar(this.vista.textArea.getText(), "Pruebaxml.xml");
+        pdf.leer("Pruebaxml.xml");
+        /*try{
+            Files.write(Paths.get("file.xml"), this.vista.textArea.getText().getBytes());
+        } catch(Exception e){
+            System.out.println("Error:");
+        } */
     }
     public void undo(){
         comando = new UndoCommand(this.vista,this.originator,this.careTaker);
         inv.execute(comando);
     }
     public void redo(){
-        
+        try(BufferedWriter fileOut = new BufferedWriter(new FileWriter("file.txt"))){
+            vista.textArea.write(fileOut);
+        } catch(Exception e){
+            System.out.println("Error");
+        }
     }
     public void copy(){
         //comando = new CopyCommand(this);
         //inv.execute(comando);
-        
+
     }
     public void cut(){
         //comando = new CutCommand(this.vista,this.copycontent);
