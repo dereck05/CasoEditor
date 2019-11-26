@@ -160,8 +160,6 @@ public class Controller implements ActionListener {
         String texto;
         switch(fileType){
             case "TXT":
-                //arreglar
-                System.out.println(vista.jTextName.getText().toString());
                 texto = abstractFactory.crear(5).leer(vista.jTextName.getText());
                 vista.textArea.setText(texto);
                 break;
@@ -175,8 +173,6 @@ public class Controller implements ActionListener {
                 vista.textArea.setText(texto);
                 break;
             case "JSON":
-                //arreglar
-                System.out.println(vista.jTextName.getText().toString());
                 texto = abstractFactory.crear(4).leer(vista.jTextName.getText());
                 vista.textArea.setText(texto);
                 break;
@@ -185,8 +181,6 @@ public class Controller implements ActionListener {
                 vista.textArea.setText(texto);
                 break;
             case "TXTTAB":
-                //arreglar
-                System.out.println(vista.jTextName.getText().toString());
                 texto = abstractFactory.crear(6).leer(vista.jTextName.getText());
                 vista.textArea.setText(texto);
                 break;
@@ -204,9 +198,6 @@ public class Controller implements ActionListener {
         String fileType = vista.jTextFile.getText();
         switch(fileType){
             case "TXT":
-                //arreglar
-                System.out.println(vista.textArea.getText().toString());
-                System.out.println(vista.jTextName.getText().toString());
                 abstractFactory.crear(5).guardar(vista.textArea.getText(), vista.jTextName.getText());
                 break;
             case "XML":
@@ -216,18 +207,12 @@ public class Controller implements ActionListener {
                 abstractFactory.crear(2).guardar(vista.textArea.getText(), vista.jTextName.getText());
                 break;
             case "JSON":
-                //arreglar
-                System.out.println(vista.textArea.getText().toString());
-                System.out.println(vista.jTextName.getText().toString());
                 abstractFactory.crear(4).guardar(vista.textArea.getText(), vista.jTextName.getText());
                 break;
             case "PDF":
                 abstractFactory.crear(1).guardar(vista.textArea.getText(), vista.jTextName.getText());
                 break;
             case "TXTTAB":
-                //arreglar
-                System.out.println(vista.textArea.getText().toString());
-                System.out.println(vista.jTextName.getText().toString());
                 abstractFactory.crear(6).guardar(vista.textArea.getText(), vista.jTextName.getText());
                 break;
             default:
