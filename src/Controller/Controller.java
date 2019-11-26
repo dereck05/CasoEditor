@@ -16,6 +16,7 @@ import Model.Commands.RedoCommand;
 import Model.Commands.SaveCommand;
 import Model.Commands.UndoCommand;
 import Model.FileFactory;
+import Model.IArchivo;
 import Model.JsonImp;
 import Model.Memento.Caretaker;
 import Model.Memento.Originator;
@@ -51,6 +52,8 @@ public class Controller implements ActionListener {
     Caretaker careTaker;
     private String copycontent;
     private int estado;
+    IArchivo fileFactory;
+    AbstractFactory abstractFactory;
 
     public Controller(Vista v){
         this.vista = v;
@@ -68,6 +71,7 @@ public class Controller implements ActionListener {
         this.vista.jBtnSave.addActionListener(this);
         this.vista.jBtnSaveAs.addActionListener(this);
         this.vista.jBtnUndo.addActionListener(this);
+        this.abstractFactory = new FileFactory();
         this.estado = -1;
         this.vista.setVisible(true);
         Runnable runnable = new Runnable() {
@@ -90,9 +94,6 @@ public class Controller implements ActionListener {
         };
         Thread hilo = new Thread(runnable);
         hilo.start();
-
-
-
     }
 
     public void setCopy(String s){
@@ -150,11 +151,49 @@ public class Controller implements ActionListener {
     }
 
     public void newDoc(){
-
+        Vista vista = new Vista();
+        Controller c = new Controller(vista);
     }
 
     public void open(){
-
+        String fileType = vista.jTextFile.getText();
+        String texto;
+        switch(fileType){
+            case "TXT":
+                //arreglar
+                System.out.println(vista.jTextName.getText().toString());
+                texto = abstractFactory.crear(5).leer(vista.jTextName.getText());
+                vista.textArea.setText(texto);
+                break;
+            case "XML":
+                //arreglar
+                texto = abstractFactory.crear(3).leer(vista.jTextName.getText());
+                vista.textArea.setText(texto);
+                break;
+            case "CSV":
+                texto = abstractFactory.crear(2).leer(vista.jTextName.getText());
+                vista.textArea.setText(texto);
+                break;
+            case "JSON":
+                //arreglar
+                System.out.println(vista.jTextName.getText().toString());
+                texto = abstractFactory.crear(4).leer(vista.jTextName.getText());
+                vista.textArea.setText(texto);
+                break;
+            case "PDF":
+                texto = abstractFactory.crear(1).leer(vista.jTextName.getText());
+                vista.textArea.setText(texto);
+                break;
+            case "TXTTAB":
+                //arreglar
+                System.out.println(vista.jTextName.getText().toString());
+                texto = abstractFactory.crear(6).leer(vista.jTextName.getText());
+                vista.textArea.setText(texto);
+                break;
+            default:
+                JOptionPane.showMessageDialog(vista, "Opción no registrada");
+                break;
+        }
     }
     public void save(){
         comando = new SaveCommand(this.vista.textArea.getText(),this.originator,this.careTaker);
@@ -162,7 +201,39 @@ public class Controller implements ActionListener {
 
     }
     public void saveAs(){
-
+        String fileType = vista.jTextFile.getText();
+        switch(fileType){
+            case "TXT":
+                //arreglar
+                System.out.println(vista.textArea.getText().toString());
+                System.out.println(vista.jTextName.getText().toString());
+                abstractFactory.crear(5).guardar(vista.textArea.getText(), vista.jTextName.getText());
+                break;
+            case "XML":
+                abstractFactory.crear(3).guardar(vista.textArea.getText(), vista.jTextName.getText());
+                break;
+            case "CSV":
+                abstractFactory.crear(2).guardar(vista.textArea.getText(), vista.jTextName.getText());
+                break;
+            case "JSON":
+                //arreglar
+                System.out.println(vista.textArea.getText().toString());
+                System.out.println(vista.jTextName.getText().toString());
+                abstractFactory.crear(4).guardar(vista.textArea.getText(), vista.jTextName.getText());
+                break;
+            case "PDF":
+                abstractFactory.crear(1).guardar(vista.textArea.getText(), vista.jTextName.getText());
+                break;
+            case "TXTTAB":
+                //arreglar
+                System.out.println(vista.textArea.getText().toString());
+                System.out.println(vista.jTextName.getText().toString());
+                abstractFactory.crear(6).guardar(vista.textArea.getText(), vista.jTextName.getText());
+                break;
+            default:
+                JOptionPane.showMessageDialog(vista, "Opción no registrada");
+                break;
+        } 
     }
     public void font(){
         JTextArea area = vista.textArea;

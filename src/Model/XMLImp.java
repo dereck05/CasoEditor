@@ -8,6 +8,7 @@ package Model;
 
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -26,8 +27,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -41,15 +44,14 @@ public class XMLImp implements IArchivo{
 
     @Override
     public void guardar(String text, String filename) {
-        
         try {
             BufferedWriter writer;
             writer = new BufferedWriter(new FileWriter(filename));
-            writer.write("<text>\n"+text+"\n<\\text>");
+            writer.write("<text>\n"+text+"\n<//text>");
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         
     }
 
@@ -77,7 +79,7 @@ public class XMLImp implements IArchivo{
             Logger.getLogger(XMLImp.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Texto xml:" + text);
-        return text;
+        return text; 
     }
     
     private String getTextValue(String def, Element doc, String tag) {

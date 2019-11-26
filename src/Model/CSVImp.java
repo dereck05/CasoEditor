@@ -37,8 +37,6 @@ public class CSVImp implements IArchivo{
         } catch (IOException ex) {
                 Logger.getLogger(CSVImp.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-      
     }
 
     @Override

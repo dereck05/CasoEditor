@@ -16,6 +16,8 @@ import java.util.logging.Logger;
  * @author derec
  */
 public class TxtTabImp implements IArchivo {
+    public TxtTabImp() {}
+    
     @Override
     public void guardar(String text, String filename){
         try {
